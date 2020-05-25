@@ -1,0 +1,25 @@
+.flex-container {
+    display: flex;
+    flex-direction: row;
+}
+.user-info {
+    flex: 0 0 200px;
+}
+.operations {
+    flex: 1 1 200px;
+}
+.right {
+    margin-left: 10px;
+}
+
+div {
+    border: 1px solid black;
+    padding: 10px;
+}
+
+div.no-borders {
+    border: 0px solid black;
+}
+div.no-paddings {
+    padding: 0px;
+}

@@ -1,0 +1,24 @@
+<div class="flex-container">
+    <div class="user-info">
+        <h4>User info:</h4>
+        <div class="no-borders no-paddings">
+            <label>Name:</label>
+            <label>{{currentUser?.name}}</label>
+        </div>
+        <div class="no-borders no-paddings">
+            <label>E-mail:</label>
+            <label>{{currentUser?.email}}</label>
+        </div>
+        <div class="no-borders no-paddings">
+            <label>Balance:</label>
+            <label>{{currentUser?.balance}}</label>
+        </div>
+        
+        <button (click)="logOut()" style="margin-top: 10px;" >Log out</button>
+    </div>
+    <div class="operations right">
+        Operation.
+        <router-outlet>
+        </router-outlet>
+    </div>
+</div>

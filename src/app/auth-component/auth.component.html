@@ -1,0 +1,44 @@
+
+<div class="flex-container" >
+    <!-- LogIn -->
+    <div class="flex-item left" >
+        <h3>Loggin in the system:</h3>
+        <form #loginForm="ngForm" novalidate (ngSubmit)="logIn(loginForm)" >
+            <div class="no-borders no-paddings">
+                <label>email:</label><br />
+                <input name="email" type="text" required ngModel >
+            </div>
+            
+            <div class="no-borders no-paddings">
+                <label>password:</label><br />
+                <input name="password" type="password" required ngModel >
+            </div>
+            
+            <button [disabled]="loginForm.invalid" type="submit" >LogIn</button>
+            
+        </form>
+    </div>
+    <!-- Add user -->
+    <div class="flex-item" >
+        <h3>Adding a new user:</h3>
+        <form #addUserForm="ngForm" novalidate (ngSubmit)="addUser(addUserForm)" >
+            <div class="no-borders no-paddings">
+                <label>name:</label><br />
+                <input name="name" type="text" required ngModel >
+            </div>
+
+            <div class="no-borders no-paddings">
+                <label>email:</label><br />
+                <input name="email" type="text" required ngModel >
+            </div>
+            
+            <div class="no-borders no-paddings">
+                <label>password:</label><br />
+                <input name="password" type="password" required ngModel >
+            </div>
+            
+            <button [disabled]="addUserForm.invalid" type="submit" >Add User</button>
+            
+        </form>
+    </div>
+</div>

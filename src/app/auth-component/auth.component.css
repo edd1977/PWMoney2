@@ -1,0 +1,33 @@
+div {
+    border: 1px solid black;
+    padding: 10px;
+}
+div.flex-container {
+    display: flex;
+    flex-direction: row;
+}
+div.flex-item {
+    flex: 1 1 100px;
+}
+.right {
+    margin-left: 10px;
+}
+.left {
+    margin-right: 10px;
+}
+
+div.no-borders {
+    border: 0px solid black;
+}
+
+button {
+    margin-top: 10px;
+    /* margin-left: 10px; */
+}
+
+input.ng-invalid {border:solid red 2px;}
+input.ng-valid {border:solid green 2px;}
+
+.no-paddings {
+    padding: 0px;
+}
