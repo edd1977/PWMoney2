@@ -1,0 +1,7 @@
+
+div.suggestions {
+
+    max-height: 100px;
+    overflow-y: scroll;
+
+}
