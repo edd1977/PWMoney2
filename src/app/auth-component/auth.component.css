@@ -1,3 +1,4 @@
+
 div {
     border: 1px solid black;
     padding: 10px;
@@ -23,11 +24,4 @@ div.no-borders {
 button {
     margin-top: 10px;
     /* margin-left: 10px; */
-}
-
-input.ng-invalid {border:solid red 2px;}
-input.ng-valid {border:solid green 2px;}
-
-.no-paddings {
-    padding: 0px;
 }

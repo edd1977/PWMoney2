@@ -20,16 +20,11 @@ export class AuthComponent {
         // test: mai_den@mail.ru #test_task
         this.appSvc.logIn(form.controls.email.value, form.controls.password.value)
             .then(response => {
-                if(response.hasOwnProperty("id_token")) { // If OK - get user info.
-                    this.appSvc.getUserInfo().then(response => {
-                        this.appSvc.currentUser = Object.assign(new User(), response["user_info_token"]);
-                        this.router.navigateByUrl('');
-                    }).catch(err => {
-                        alert("Error during the getting user-info:\n" + JSON.stringify(err));
-                    });
-                } else { // error
-                    alert("Error during the LogIn:\n" + JSON.stringify(response));
-                }
+                this.router.navigateByUrl('');
+            })
+            .catch(err => {
+                alert("Error during the LogIn:\nSee the results in console.");
+                console.error(err);
             });
     }
 

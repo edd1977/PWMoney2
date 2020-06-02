@@ -3,15 +3,15 @@
         <h4>User info:</h4>
         <div class="no-borders no-paddings">
             <label>Name:</label>
-            <label>{{currentUser?.name}}</label>
+            <label>{{appSvc?.currentUser?.name}}</label>
         </div>
         <div class="no-borders no-paddings">
             <label>E-mail:</label>
-            <label>{{currentUser?.email}}</label>
+            <label>{{appSvc?.currentUser?.email}}</label>
         </div>
         <div class="no-borders no-paddings">
             <label>Balance:</label>
-            <label>{{currentUser?.balance}}</label>
+            <label>{{appSvc?.currentUser?.balance}}</label>
         </div>
         
         <button (click)="logOut()" style="margin-top: 10px;" >Log out</button>
@@ -21,4 +21,9 @@
         <router-outlet>
         </router-outlet>
     </div>
+</div>
+<div class="no-borders" *ngIf="messSvc?.messages?.length > 0" >
+    <ul>
+        <li *ngFor="let mess of messSvc.messages" style="font-weight: bold; color: red;" >{{mess}}</li>
+    </ul>
 </div>

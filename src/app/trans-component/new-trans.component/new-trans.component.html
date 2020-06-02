@@ -3,18 +3,18 @@
         <h3>New transaction:</h3>
     </div>
     <div class="flex-item" >
-        <form novalidate [formGroup]="form2" (ngSubmit)="submitTransaction()" >
+        <form novalidate [formGroup]="formModel" (ngSubmit)="submitTransaction(formModel)" >
 
             <div class="" >
                 <label>User:</label>
                 <div class="autocomplete" >
                     <div class="input" >
-                        <input name="name" formControlName="name" type="text" required autocomplete="off" (input)="onInputKeyUp(formNew)" >
+                        <input formControlName="name" type="text" required autocomplete="off" (input)="onInputKeyUp(formModel)" >
                     </div>
-                    <div class="suggestions" *ngIf="formNew?.controls?.name?.value && !recipient" >
+                    <div class="suggestions" *ngIf="formModel?.controls?.name?.value && !recipient" >
                         <ul>
                             <li *ngFor="let item of data"
-                                (click)="form2.controls.name.setValue(item.name); recipient = item;">
+                                (click)=" formModel?.controls?.name.setValue(item.name); recipient = item;">
                                 {{item.name + ", " + item.balance}}
                             </li>
                         </ul>
@@ -26,11 +26,11 @@
             <div class="">
                 <label>Amount:</label>
                 <div>
-                    <input name="amount" formControlName="amount" type="number" required autocomplete="of" #amount >
+                    <input formControlName="amount" type="number" autocomplete="of">
                 </div>
             </div>
 
-            <button (click)="seeForm()" >See form</button>
+            <button type="submit"  >Send money</button> <!-- [disabled]="formModel.invalid" -->
         
         </form>
     </div>

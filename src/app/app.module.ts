@@ -10,7 +10,8 @@ import { AuthComponent } from './auth-component/auth.component';
 import { HttpClientModule } from '@angular/common/http'
 import { MainComponent } from './main-component/main.component';
 import { AuthGuard } from './services/auth.guard';
-import { NewTransComponent, AmountValidator } from './trans-component/new-trans.component/new-trans.component';
+import { NewTransComponent, MyValidators } from './trans-component/new-trans.component/new-trans.component';
+import { MessageService } from "./services/message.service";
 
 const routes: Routes = [
   {path: '', redirectTo: "/main", pathMatch: "full"},
@@ -37,7 +38,7 @@ const routes: Routes = [
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [AppService, AuthGuard, AmountValidator],
+  providers: [AppService, AuthGuard, MyValidators, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

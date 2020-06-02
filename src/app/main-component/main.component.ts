@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { User } from "app/services/model";
 import { AppService } from "app/services/app.service";
 import { Router } from "@angular/router";
+import { MessageService } from "app/services/message.service";
 
 @Component({
     selector: 'main-componet',
@@ -9,10 +10,10 @@ import { Router } from "@angular/router";
     templateUrl: 'main.component.html'
 })
 export class MainComponent {
-    currentUser: User = null;
+    //currentUser: User = null;
 
-    constructor(private appSvc: AppService) {
-        this.currentUser = appSvc.currentUser;
+    constructor(public appSvc: AppService, public messSvc: MessageService) {
+        //this.currentUser = appSvc.currentUser;
     }
 
     logOut() {
