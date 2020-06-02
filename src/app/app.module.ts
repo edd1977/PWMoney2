@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
@@ -10,7 +10,7 @@ import { AuthComponent } from './auth-component/auth.component';
 import { HttpClientModule } from '@angular/common/http'
 import { MainComponent } from './main-component/main.component';
 import { AuthGuard } from './services/auth.guard';
-import { NewTransComponent } from './trans-component/new-trans.component/new-trans.component';
+import { NewTransComponent, AmountValidator } from './trans-component/new-trans.component/new-trans.component';
 
 const routes: Routes = [
   {path: '', redirectTo: "/main", pathMatch: "full"},
@@ -34,9 +34,10 @@ const routes: Routes = [
     FormsModule,
     HttpModule,
     RouterModule.forRoot(routes),
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
-  providers: [AppService, AuthGuard],
+  providers: [AppService, AuthGuard, AmountValidator],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
