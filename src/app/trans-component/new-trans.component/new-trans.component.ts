@@ -4,6 +4,8 @@ import { NgForm, ValidatorFn, FormControl, FormGroup, Validators } from "@angula
 import { HttpClient } from "@angular/common/http";
 import { MessageService } from "app/services/message.service";
 import { IfObservable } from "rxjs/observable/IfObservable";
+import { Transaction, Users, User } from "app/services/model";
+import { ActivatedRoute } from "@angular/router";
 
 @Injectable()
 export class MyValidators {
@@ -23,7 +25,7 @@ export class MyValidators {
 
     static validateName(control: FormControl): {[s: string]: boolean} {
         const ctrlVal = control.value;
-        const result = MyValidators.svc.users_test.find(u => u.name === ctrlVal) != null? null: {"userName": true};
+        const result = MyValidators.svc.users.find(u => u.name === ctrlVal) != null? null: {"userName": true};
         return result;
     }
 }
@@ -38,10 +40,11 @@ export class NewTransComponent {
     formModel: FormGroup;
 
     data: any[] = [];
-    recipient: any = null;
+    //recipient: any = null;
 
     constructor(private appSvc: AppService, private http: HttpClient, private amountVal: MyValidators
-        , private messSvc: MessageService) {
+        , private messSvc: MessageService,
+        private route: ActivatedRoute) {
         this.formModel = new FormGroup({
             name: new FormControl("", [Validators.required, MyValidators.validateName]),
             amount: new FormControl(1, [
@@ -50,19 +53,34 @@ export class NewTransComponent {
         });
     }
 
+    ngOnInit() {
+        const transId = this.route.snapshot.queryParams["transId"];
+        if(transId) {
+            const Id = Number.parseInt(transId);
+            const trans = this.appSvc.transactions.find(t => t.id === Id);
+            if(trans) {
+                this.formModel.controls.name.setValue(trans.username);
+                this.formModel.controls.amount.setValue(-trans.amount);
+            } else {
+                console.error("There is no transaction with Id = " + Id);
+            }
+        }
+    }
+
     onInputKeyUp(form: NgForm) {
 
         const way = 'not ' + 'static';
 
-        this.recipient = null; // while typing - there is no any choice.
+        //this.recipient = null; // while typing - there is no any choice.
         const text = form.controls.name.value;
         // static approach:
         if(way === 'static') {
-            this.data = this.appSvc.users_test.filter(u => u.name.indexOf(text) >= 0);
+            this.data = this.appSvc.users.filter(u => u.name.indexOf(text) >= 0);
         } else {
             // dynamic approach:
             this.appSvc.getUsers(text).then(uu => {
-                this.data = uu as any[];
+                this.appSvc.users = uu as Users;
+                this.data = uu as Users;
             })
             .catch(err => {
                 console.error(err);
@@ -75,7 +93,8 @@ export class NewTransComponent {
         if(form.valid) {
             this.appSvc.createTransaction(form.controls.name.value, Number.parseFloat(form.controls.amount.value))
             .then(response => {
-                console.log(response);
+                // We must add a new transaction:
+                this.appSvc.addFixedTransactionToList(response["trans_token"] as Transaction);
             })
             .catch(err => {
                 console.error(err);

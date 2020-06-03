@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Users, User } from "./model";
+import { Users, User, Transactions, Transaction } from "./model";
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Router } from "@angular/router";
 import { Body } from "@angular/http/src/body";
@@ -11,8 +11,9 @@ export class AppService {
     users: Users = [];
     currentUser: User = null;
     session_token: string = "";
+    transactions: Transactions = [];
 
-    users_test: Users = []; // by cause of not understanding what is the "{filter}" in a request.
+    //users_test: Users = []; // by cause of not understanding what is the "{filter}" in a request.
 
     constructor(private http: HttpClient, private router: Router) {
         //
@@ -34,8 +35,12 @@ export class AppService {
                 return this.getUsers();
             })
             .then(uu => { // getting all users
-                this.users_test = uu as Users;
-                return this; // AppService
+                this.users = uu as Users;
+                //this.users_test = uu as Users;
+                return this.getTransactions(); // AppService
+            }).then(tt => {
+                this.transactions = tt["trans_token"] as Transactions;
+                return true;
             });
     }
 
@@ -69,26 +74,34 @@ export class AppService {
             url = `http://193.124.114.46:3001/api/protected/users/list`;
             const headers = new HttpHeaders().set('Authorization', 'bearer ' + this.session_token);
             const body = { filter: filter || "" };
-            this.http.post(url, body, {headers: headers}).toPromise();
+            return this.http.post(url, body, {headers: headers}).toPromise();
         }
     }
 
     createTransaction(name: string, amount: number): Promise<Object> {
-        const url = 'http://localhost:3500/api/protected/transactions';
+        const url = 'http://193.124.114.46:3001/api/protected/transactions';
         const body = {
             name: name,
             amount: amount
         };
         const headers = new HttpHeaders().set('Authorization', 'bearer ' + this.session_token);
-        return new Promise((res, rej) => {
-            res({ status: 'TODO' });
-        }); // this.http.post(url, body, { headers: headers }).toPromise();
+        return this.http.post(url, body, { headers: headers }).toPromise();
+    }
+
+    getTransactions(): Promise<Object> {
+        const url = 'http://193.124.114.46:3001/api/protected/transactions';
+        const headers = new HttpHeaders().set('Authorization', 'bearer ' + this.session_token);
+        return this.http.get(url, { headers: headers }).toPromise();
+    }
+
+    addFixedTransactionToList(t: Transaction) {
+        this.transactions.push(t);
     }
 
     logOut() {
         this.currentUser = null;
         this.users = [];
-        this.users_test = [];
+        //this.users_test = [];
         this.session_token = "";
         this.router.navigateByUrl("/auth");
     }

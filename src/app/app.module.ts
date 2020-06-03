@@ -12,12 +12,14 @@ import { MainComponent } from './main-component/main.component';
 import { AuthGuard } from './services/auth.guard';
 import { NewTransComponent, MyValidators } from './trans-component/new-trans.component/new-trans.component';
 import { MessageService } from "./services/message.service";
+import { TransListComponent } from "./trans-list.component/trans-list.component";
 
 const routes: Routes = [
   {path: '', redirectTo: "/main", pathMatch: "full"},
   {path: "main", component: MainComponent, canActivate: [AuthGuard],
     children: [
-      {path: '', component: NewTransComponent}
+      {path: '', component: NewTransComponent},
+      {path: 'trans-list', component: TransListComponent}
     ]
   },
   {path: "auth", component: AuthComponent},
@@ -28,7 +30,8 @@ const routes: Routes = [
     AppComponent,
     AuthComponent,
     MainComponent,
-    NewTransComponent
+    NewTransComponent,
+    TransListComponent
   ],
   imports: [
     BrowserModule,

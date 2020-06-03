@@ -1,3 +1,21 @@
 div {
     width: 100%;
 }
+
+a.link {
+    display: inline-block;
+    padding: 5px;
+    cursor: pointer;
+}
+a.link:visited, a.link.active, a.link:hover {
+    color: black;
+}
+
+.gray {
+    color: gray !important;
+    cursor: initial !important;
+}
+
+a.active {
+    font-weight: bold;
+}

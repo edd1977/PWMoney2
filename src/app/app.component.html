@@ -1,5 +1,8 @@
 <div>
-  Main menu
+  <a routerLink="/main" class="link"  [class.gray]="appSvc?.currentUser == null"
+    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" >New Transaction</a>
+  <a routerLink="/main/trans-list" class="link" [class.gray]="appSvc?.currentUser == null"
+    [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" >Transactions</a>
 </div>
 <div>
   <router-outlet></router-outlet>
