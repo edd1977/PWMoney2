@@ -1,8 +1,8 @@
-<div class="flex-container" >
-    <div class="flex-item" >
-        <h4>Transactions:</h4>
-    </div>
-    <div class="flex-item" >
+<div fxLayout="column" fxFlex="1 1 100%" fxLayoutAlign="center" > 
+
+    <h4 fxFlexAlign="center" >Transactions:</h4>
+
+    <div class="scroll-content" fxFlexAlign="center" >
         
         <table cellpadding="0" cellspacing="0" >
             <thead>
@@ -19,9 +19,9 @@
                 <tr *ngFor="let t of appSvc.transactions; let i=index;" >
                     <td>{{t.date | date:"dd.MM.yyyy" }}</td>
                     <td>{{t.username}}</td>
-                    <td>{{t.amount | number:'1.2-2'}}</td>
-                    <td>{{t.balance | number:'1.2-2'}}</td>
-                    <button [routerLink]="'/main'" [queryParams]="{'transId': t.id}" >Copy</button>
+                    <td [colorNum]="t.amount" class="number" >{{t.amount | positiveNum | number:'1.2-2' }}</td>
+                    <td [colorNum]="t.balance" class="number" >{{t.balance | number:'1.2-2'}}</td>
+                    <button class="btn copy-action" [routerLink]="'/new-trans'" [queryParams]="{'transId': t.id}" >Copy</button>
                 </tr>
             </tbody>
         </table>

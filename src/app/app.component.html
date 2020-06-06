@@ -1,4 +1,27 @@
-<div>
+<div class="layout-container" fxLayout="row" fxLayoutAlign="center center" >
+
+  <div class="app-container" fxLayout="column" fxFlex="0 0 auto" >
+
+    <div class="header">
+      PW Application
+    </div>
+
+    <div *ngIf="appSvc?.authenticated" class="btn-panel" fxLayout="row" [style.padding-top.px]="2" >
+      <button class="btn disabled" routerLink="/new-trans" routerLinkActive="active-route" >New trans.</button>
+      <button class="btn disabled" routerLink="/trans-list" routerLinkActive="active-route" >Trans. List</button>
+      <button class="btn disabled" routerLink="/user-info" routerLinkActive="active-route" >User Info</button>
+      <button class="btn disabled" (click)="logOut()" >Log Out</button>
+    </div>
+
+    <div class="body" fxFlex="0 1 100%" fxLayout="column" fxLayoutAlign="center center" >
+      <router-outlet></router-outlet>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- <div fxLayout="row" fxLayoutAlign="end" >
   <a routerLink="/main" class="link"  [class.gray]="appSvc?.currentUser == null"
     routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" >New Transaction</a>
   <a routerLink="/main/trans-list" class="link" [class.gray]="appSvc?.currentUser == null"
@@ -6,4 +29,4 @@
 </div>
 <div>
   <router-outlet></router-outlet>
-</div>
+</div> -->

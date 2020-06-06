@@ -10,7 +10,7 @@ import { Transactions } from "app/services/model";
 })
 export class TransListComponent {
     
-    constructor(private appSvc: AppService) {
+    constructor(public appSvc: AppService) {
         //
     }
 

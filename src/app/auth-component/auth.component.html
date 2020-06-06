@@ -1,44 +1,53 @@
 
-<div class="flex-container" >
-    <!-- LogIn -->
-    <div class="flex-item left" >
-        <h3>Loggin in the system:</h3>
-        <form #loginForm="ngForm" novalidate (ngSubmit)="logIn(loginForm)" >
-            <div class="no-borders no-paddings">
-                <label>email:</label><br />
-                <input name="email" type="text" required ngModel >
-            </div>
-            
-            <div class="no-borders no-paddings">
-                <label>password:</label><br />
-                <input name="password" type="password" required ngModel >
-            </div>
-            
-            <button [disabled]="loginForm.invalid" type="submit" >LogIn</button>
-            
-        </form>
-    </div>
-    <!-- Add user -->
-    <div class="flex-item" >
-        <h3>Adding a new user:</h3>
-        <form #addUserForm="ngForm" novalidate (ngSubmit)="addUser(addUserForm)" >
-            <div class="no-borders no-paddings">
-                <label>name:</label><br />
-                <input name="name" type="text" required ngModel >
-            </div>
 
-            <div class="no-borders no-paddings">
-                <label>email:</label><br />
-                <input name="email" type="text" required ngModel >
+<div class="layout" fxFlex="1 1 100%" fxLayout="column" >
+    <div class="btn-panel"  fxLayout="row" >
+        <button class="btn" (click)="login_op = true" [class.disabled]="!login_op" >Log In</button>
+        <button class="btn" (click)="login_op = false" [class.disabled]="login_op" >Register</button>
+    </div>
+    <div class="content" fxFlex="0 1 100%" fxLayout="row" >
+        <!-- TODO Flex here too!!! -->
+        <div *ngIf="login_op; else register_op" fxLayout="column" fxFlex="1 0 100%" fxLayoutAlign="center" >
+            <h4 fxFlexAlign="center" [style.margine.top.px]="0" >Log In</h4>
+            <form #loginForm="ngForm" novalidate (ngSubmit)="logIn(loginForm)" fxLayout="column" fxLayoutGap="10px" [style.height.px]="200" >
+
+                <div class="no-borders no-paddings" fxFlexAlign="center" >
+                    <label>email:</label><br />
+                    <input name="email" type="text" required ngModel >
+                </div>
+                
+                <div class="no-borders no-paddings" fxFlexAlign="center" >
+                    <label>password:</label><br />
+                    <input name="password" type="password" required ngModel >
+                </div>
+                
+                <button class="btn" [disabled]="loginForm.invalid" type="submit" fxFlexAlign="center" >LogIn</button>
+                
+            </form>
+        </div>
+        <ng-template #register_op>
+            <div fxLayout="column" fxFlex="1 0 100%" fxLayoutAlign="center" >
+                <h4 fxFlexAlign="center" [style.margine.top.px]="0" >Register new user</h4>
+                <form #addUserForm="ngForm" novalidate (ngSubmit)="addUser(addUserForm)" fxLayout="column" fxLayoutGap="10px" [style.height.px]="200" >
+                    <div class="no-borders no-paddings" fxFlexAlign="center" >
+                        <label>name:</label><br />
+                        <input name="name" type="text" required ngModel >
+                    </div>
+        
+                    <div class="no-borders no-paddings" fxFlexAlign="center" >
+                        <label>email:</label><br />
+                        <input name="email" type="text" required ngModel >
+                    </div>
+                    
+                    <div class="no-borders no-paddings" fxFlexAlign="center" >
+                        <label>password:</label><br />
+                        <input name="password" type="password" required ngModel >
+                    </div>
+                    
+                    <button class="btn" [disabled]="addUserForm.invalid" type="submit" fxFlexAlign="center" >Add User</button>
+                    
+                </form>
             </div>
-            
-            <div class="no-borders no-paddings">
-                <label>password:</label><br />
-                <input name="password" type="password" required ngModel >
-            </div>
-            
-            <button [disabled]="addUserForm.invalid" type="submit" >Add User</button>
-            
-        </form>
+        </ng-template>
     </div>
 </div>

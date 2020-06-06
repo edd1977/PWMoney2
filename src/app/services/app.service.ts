@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { Users, User, Transactions, Transaction } from "./model";
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Router } from "@angular/router";
-import { Body } from "@angular/http/src/body";
 
 
 @Injectable()
@@ -13,7 +12,9 @@ export class AppService {
     session_token: string = "";
     transactions: Transactions = [];
 
-    //users_test: Users = []; // by cause of not understanding what is the "{filter}" in a request.
+    get authenticated(): boolean {
+        return this.session_token.length > 0;
+    }
 
     constructor(private http: HttpClient, private router: Router) {
         //

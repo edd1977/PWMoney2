@@ -1,8 +1,41 @@
 /* You can add global styles to this file, and also import other style files */
 
+body, html {
+    height: 100%;
+}
+body {
+    padding: 0px;
+    margin: 0px;
+}
+
+auth-component, new-trans, main-componet, trans-list {
+    flex: 1 1 100%;
+    width: 100%;
+    display: flex;
+    color: darkorange;
+}
+
+.btn-panel {
+    background: lemonchiffon;
+    height: 30px;
+}
+
+.btn {
+    background: goldenrod;
+    border-color: orange;
+    color: white;
+    height: 25px;
+}
+.btn.disabled, .btn[disabled] {
+    opacity: 50%;
+}
+.btn.active-route {
+    opacity: 100%;
+}
+.btn:focus {
+    outline: none;
+}
+
+/* validation: */
 input.ng-invalid {border:solid red 2px;}
 input.ng-valid {border:solid green 2px;}
-
-.no-paddings {
-    padding: 0px;
-}

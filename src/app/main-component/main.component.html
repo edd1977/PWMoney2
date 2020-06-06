@@ -1,28 +1,28 @@
-<div class="flex-container">
-    <div class="user-info">
-        <h4>User info:</h4>
-        <div class="no-borders no-paddings">
-            <label>Name:</label>
-            <label>{{appSvc?.currentUser?.name}}</label>
+<div class="layout" fxFlex="1 1 100%" fxLayout="column" >
+
+    <div class="content" fxFlex="0 1 100%" fxLayout="row" >
+
+        <div fxFlex="1 0 100%" fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center" >
+
+            <h4 fxFlexAlign="center" >User info:</h4>
+
+            <div class="" fxFlexAlign="center" >
+                <label>Name:</label>
+                <label>{{appSvc?.currentUser?.name}}</label>
+            </div>
+            <div class="" fxFlexAlign="center" >
+                <label>E-mail:</label>
+                <label>{{appSvc?.currentUser?.email}}</label>
+            </div>
+            <div class="" fxFlexAlign="center" >
+                <label>Balance:</label>
+                <label>{{appSvc?.currentUser?.balance}}</label>
+            </div>
+            
+            <button (click)="logOut()" class="btn" fxFlexAlign="center" >Log out</button>
         </div>
-        <div class="no-borders no-paddings">
-            <label>E-mail:</label>
-            <label>{{appSvc?.currentUser?.email}}</label>
-        </div>
-        <div class="no-borders no-paddings">
-            <label>Balance:</label>
-            <label>{{appSvc?.currentUser?.balance}}</label>
-        </div>
-        
-        <button (click)="logOut()" style="margin-top: 10px;" >Log out</button>
+
     </div>
-    <div class="operations right">
-        <router-outlet>
-        </router-outlet>
-    </div>
+
 </div>
-<div class="no-borders" *ngIf="messSvc?.messages?.length > 0" >
-    <ul>
-        <li *ngFor="let mess of messSvc.messages" style="font-weight: bold; color: red;" >{{mess}}</li>
-    </ul>
-</div>
+

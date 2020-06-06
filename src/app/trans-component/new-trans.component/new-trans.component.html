@@ -1,38 +1,34 @@
-<div class="flex-container" >
-    <div class="flex-item" >
-        <h4>New transaction:</h4>
-    </div>
-    <div class="flex-item" >
-        <form novalidate [formGroup]="formModel" (ngSubmit)="submitTransaction(formModel)" >
+<div fxFlex="1 0 100%" fxLayout="column" fxLayoutAlign="center" >
+    
+    <h4 fxFlexAlign="center" >New transaction:</h4>
+    
+    <form novalidate [formGroup]="formModel" (ngSubmit)="submitTransaction(formModel)"
+        fxFlex="0 0 auto" fxLayout="column" fxLayoutAlign="center" fxLayoutGap="10px" >
 
-            <div class="" >
-                <label>User:</label>
-                <div class="autocomplete" >
-                    <div class="input" >
-                        <input formControlName="name" type="text" required autocomplete="off" (input)="onInputKeyUp(formModel)" >
-                    </div>
-                    <div class="suggestions" *ngIf="formModel?.controls?.name?.value && !recipient" >
-                        <ul>
-                            <li *ngFor="let item of data"
-                                (click)=" formModel?.controls?.name.setValue(item.name); recipient = item;">
-                                {{item.name + ", " + item.balance}}
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+        <div class="autocomplete" fxFlexAlign="center" >
+            <label >User:</label>
+            <div class="input" >
+                <input formControlName="name" type="text" required autocomplete="off" (input)="onInputKeyUp(formModel)" >
             </div>
-
-            <!-- TODO -->
-            <div class="">
-                <label>Amount:</label>
-                <div>
-                    <input formControlName="amount" type="number" autocomplete="of">
-                </div>
+            <div class="suggestions" *ngIf="formModel?.controls?.name?.value" >
+                <ul>
+                    <li *ngFor="let item of data"
+                        (click)=" formModel?.controls?.name.setValue(item.name); recipient = item;">
+                        {{item.name + ", " + item.balance}}
+                    </li>
+                </ul>
             </div>
+        </div>
 
-            <button type="submit"  >Send money</button> <!-- [disabled]="formModel.invalid" -->
-        
-        </form>
-    </div>
+        <div fxFlexAlign="center">
+            <label>Amount:</label>
+            <div>
+                <input formControlName="amount" type="number" autocomplete="of">
+            </div>
+        </div>
+
+        <button type="submit" fxFlexAlign="center" class="btn" [disabled]="formModel.invalid" >Send money</button>
+    
+    </form>
     
 </div>

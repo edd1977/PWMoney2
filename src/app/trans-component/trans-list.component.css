@@ -1,0 +1,23 @@
+table {
+    border-collapse: collapse;
+}
+
+td {
+    border: 1px solid black;
+    padding: 3px;
+}
+
+table .copy-action {
+    margin-top: 1px;
+    margin-left: 2px;
+    height: 23px;
+}
+
+td.number {
+    text-align: end;
+}
+
+.scroll-content {
+    max-height: 250px;
+    overflow-y: scroll;
+}

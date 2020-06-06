@@ -12,6 +12,8 @@ import { Router } from "@angular/router";
 })
 export class AuthComponent {
 
+    login_op: boolean = true;
+
     constructor(private appSvc: AppService, private router: Router) {
         //
     }

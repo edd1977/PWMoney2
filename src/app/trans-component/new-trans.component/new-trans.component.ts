@@ -3,7 +3,6 @@ import { AppService } from "app/services/app.service";
 import { NgForm, ValidatorFn, FormControl, FormGroup, Validators } from "@angular/forms";
 import { HttpClient } from "@angular/common/http";
 import { MessageService } from "app/services/message.service";
-import { IfObservable } from "rxjs/observable/IfObservable";
 import { Transaction, Users, User } from "app/services/model";
 import { ActivatedRoute } from "@angular/router";
 
@@ -40,7 +39,6 @@ export class NewTransComponent {
     formModel: FormGroup;
 
     data: any[] = [];
-    //recipient: any = null;
 
     constructor(private appSvc: AppService, private http: HttpClient, private amountVal: MyValidators
         , private messSvc: MessageService,
@@ -60,18 +58,17 @@ export class NewTransComponent {
             const trans = this.appSvc.transactions.find(t => t.id === Id);
             if(trans) {
                 this.formModel.controls.name.setValue(trans.username);
-                this.formModel.controls.amount.setValue(-trans.amount);
+                this.formModel.controls.amount.setValue(trans.amount >= 0? trans.amount: -trans.amount);
             } else {
                 console.error("There is no transaction with Id = " + Id);
             }
         }
     }
 
-    onInputKeyUp(form: NgForm) {
+    onInputKeyUp(form: FormGroup) {
 
         const way = 'not ' + 'static';
 
-        //this.recipient = null; // while typing - there is no any choice.
         const text = form.controls.name.value;
         // static approach:
         if(way === 'static') {

@@ -12,4 +12,11 @@ export class AppComponent {
     //
   }
 
+  logOut() {
+    let logout = confirm("Do you want to LogOut?");
+    if(logout) {
+        this.appSvc.logOut();
+    }
+  }
+
 }
