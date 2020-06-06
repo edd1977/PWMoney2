@@ -15,6 +15,11 @@ auth-component, new-trans, main-componet, trans-list {
     color: darkorange;
 }
 
+.layout {
+    margin: 5px;
+    border: goldenrod 1px solid;
+}
+
 .btn-panel {
     background: lemonchiffon;
     height: 30px;

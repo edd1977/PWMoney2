@@ -6,7 +6,7 @@
         <button class="btn" (click)="login_op = false" [class.disabled]="login_op" >Register</button>
     </div>
     <div class="content" fxFlex="0 1 100%" fxLayout="row" >
-        <!-- TODO Flex here too!!! -->
+        
         <div *ngIf="login_op; else register_op" fxLayout="column" fxFlex="1 0 100%" fxLayoutAlign="center" >
             <h4 fxFlexAlign="center" [style.margine.top.px]="0" >Log In</h4>
             <form #loginForm="ngForm" novalidate (ngSubmit)="logIn(loginForm)" fxLayout="column" fxLayoutGap="10px" [style.height.px]="200" >
@@ -25,6 +25,7 @@
                 
             </form>
         </div>
+        
         <ng-template #register_op>
             <div fxLayout="column" fxFlex="1 0 100%" fxLayoutAlign="center" >
                 <h4 fxFlexAlign="center" [style.margine.top.px]="0" >Register new user</h4>
@@ -49,5 +50,6 @@
                 </form>
             </div>
         </ng-template>
+
     </div>
 </div>
