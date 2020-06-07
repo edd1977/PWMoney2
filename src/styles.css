@@ -41,6 +41,10 @@ auth-component, new-trans, main-componet, trans-list {
     outline: none;
 }
 
+input:focus {
+    outline: none;
+}
+
 /* validation: */
 input.ng-invalid {border:solid red 2px;}
 input.ng-valid {border:solid green 2px;}
