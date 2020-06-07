@@ -28,6 +28,12 @@
         </div>
 
         <button type="submit" fxFlexAlign="center" class="btn" [disabled]="formModel.invalid" >Send money</button>
+
+        <div *ngIf="true" fxFlexAlign="center" class="form-errors" >
+            <div *ngFor="let err of getValidationErrors()" >
+                {{err}}
+            </div>
+        </div>
     
     </form>
     

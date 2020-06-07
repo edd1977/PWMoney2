@@ -1,4 +1,4 @@
-<div class="layout-container" fxLayout="row" fxLayoutAlign="center center" >
+<div fxLayout="row" fxLayoutAlign="center center" class="main-frame" >
 
   <div class="app-container" fxLayout="column" fxFlex="0 0 auto" >
 
@@ -15,6 +15,18 @@
 
     <div class="body" fxFlex="0 1 100%" fxLayout="column" fxLayoutAlign="center center" >
       <router-outlet></router-outlet>
+
+      <div class="modal" *ngIf="showWaitPanel" fxLayout="row" fxLayoutAlign="center" >
+        <div style="background: white; padding: 20px;" fxFlexAlign="center"
+        >Please wait...</div>
+      </div>
+
+    </div>
+
+    <div fxFlex="0 0 90px" *ngIf="errMess?.length > 0" class="footer" >
+      <div *ngFor="let mess of errMess; let i = index;" >
+        {{i + 1}}) {{mess}}
+      </div>
     </div>
 
   </div>

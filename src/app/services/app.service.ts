@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Users, User, Transactions, Transaction } from "./model";
 import { HttpClient, HttpHeaders } from '@angular/common/http'
-import { Router } from "@angular/router";
+import { Router, NavigationEnd } from "@angular/router";
 
 
 @Injectable()
@@ -11,6 +11,8 @@ export class AppService {
     currentUser: User = null;
     session_token: string = "";
     transactions: Transactions = [];
+
+    showWaitPanel: boolean = false;
 
     get authenticated(): boolean {
         return this.session_token.length > 0;
@@ -39,7 +41,8 @@ export class AppService {
                 this.users = uu as Users;
                 //this.users_test = uu as Users;
                 return this.getTransactions(); // AppService
-            }).then(tt => {
+            })
+            .then(tt => {
                 this.transactions = tt["trans_token"] as Transactions;
                 return true;
             });
@@ -106,5 +109,8 @@ export class AppService {
         this.session_token = "";
         this.router.navigateByUrl("/auth");
     }
+
+    // Wait panel:
+    
 
 }

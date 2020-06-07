@@ -11,10 +11,10 @@ import { HttpClientModule } from '@angular/common/http'
 import { MainComponent } from './main-component/main.component';
 import { AuthGuard } from './services/auth.guard';
 import { NewTransComponent, MyValidators } from './trans-component/new-trans.component/new-trans.component';
-import { MessageService } from "./services/message.service";
 import { TransListComponent } from "./trans-component/trans-list.component";
 import { ColorDirective } from './directives/color.directive';
 import { PositiveNumPipe } from './directives/positive.pipe';
+import { ErrorNotifyService } from './services/errorNotify.service';
 
 const routes: Routes = [
   {path: '', redirectTo: "/user-info", pathMatch: "full"},
@@ -44,7 +44,10 @@ const routes: Routes = [
     ReactiveFormsModule,
     FlexLayoutModule
   ],
-  providers: [AppService, AuthGuard, MyValidators, MessageService],
+  providers: [
+    AppService, AuthGuard, MyValidators,
+    { provide: "ERROR_MESS", useValue: ErrorNotifyService.notyfying }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

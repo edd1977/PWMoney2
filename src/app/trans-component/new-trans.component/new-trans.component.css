@@ -5,3 +5,11 @@ div.suggestions {
     overflow-y: scroll;
 
 }
+
+.form-errors {
+    width: 300px;
+    max-height: 100px;
+    overflow-y: auto;
+    color: red;
+    text-align: center;
+}

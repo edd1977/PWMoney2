@@ -1,10 +1,11 @@
-import { Component, ViewChild, Injectable } from "@angular/core";
+import { Component, ViewChild, Injectable, Inject } from "@angular/core";
 import { AppService } from "app/services/app.service";
 import { NgForm, ValidatorFn, FormControl, FormGroup, Validators } from "@angular/forms";
 import { HttpClient } from "@angular/common/http";
-import { MessageService } from "app/services/message.service";
 import { Transaction, Users, User } from "app/services/model";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Subject } from "rxjs";
+import { ErrorNotifyService } from "app/services/errorNotify.service";
 
 @Injectable()
 export class MyValidators {
@@ -39,10 +40,11 @@ export class NewTransComponent {
     formModel: FormGroup;
 
     data: any[] = [];
-
-    constructor(private appSvc: AppService, private http: HttpClient, private amountVal: MyValidators
-        , private messSvc: MessageService,
-        private route: ActivatedRoute) {
+    
+    constructor(private appSvc: AppService, private http: HttpClient, private amountVal: MyValidators,
+        private route: ActivatedRoute, private router: Router,
+        @Inject("ERROR_MESS") private error: Subject<string>
+        ) {
         this.formModel = new FormGroup({
             name: new FormControl("", [Validators.required, MyValidators.validateName]),
             amount: new FormControl(1, [
@@ -60,9 +62,43 @@ export class NewTransComponent {
                 this.formModel.controls.name.setValue(trans.username);
                 this.formModel.controls.amount.setValue(trans.amount >= 0? trans.amount: -trans.amount);
             } else {
-                console.error("There is no transaction with Id = " + Id);
+                this.error.next(`There is no transaction with Id "${Id}" in data base.`);
             }
         }
+    }
+
+    getValidationErrors(): string[] {
+        let errs: string[] = [];
+        //
+        if(this.formModel) {
+            for(let ctrlName in this.formModel.controls) {
+                if(this.formModel.controls[ctrlName].invalid) {
+                    for(let errName in this.formModel.controls[ctrlName].errors) {
+                        switch(errName) {
+                            case "required":
+                                switch(ctrlName) {
+                                    case "name":
+                                        errs.push(`Please, enter a user name.`);
+                                        break;
+                                    case "amount":
+                                        errs.push(`Please, enter an amount of PW.`);
+                                        break;
+                                }
+                                break;
+                            case "userName":
+                                errs.push(`User name is not in the data base.`);
+                                break;
+                            case "amount":
+                                errs.push(`Amount have to be from 1 to ${this.appSvc.currentUser.balance}.`);
+                                break;
+                        }
+                    }    
+                }
+            }
+        }
+
+        //
+        return errs;
     }
 
     onInputKeyUp(form: FormGroup) {
@@ -80,7 +116,7 @@ export class NewTransComponent {
                 this.data = uu as Users;
             })
             .catch(err => {
-                console.error(err);
+                this.error.next(`Autocomplete doesn't work: ${ErrorNotifyService.getHttpErrorMessage(err)}`);
             });
         }
     }
@@ -88,23 +124,27 @@ export class NewTransComponent {
     submitTransaction(form: FormGroup) {
         const errors = [];
         if(form.valid) {
+            this.appSvc.showWaitPanel = true;
+            //
             this.appSvc.createTransaction(form.controls.name.value, Number.parseFloat(form.controls.amount.value))
             .then(response => {
                 // We must add a new transaction:
                 this.appSvc.addFixedTransactionToList(response["trans_token"] as Transaction);
+                this.router.navigateByUrl("/user-info");
             })
             .catch(err => {
-                console.error(err);
-                
+                this.error.next(`Transaction can't be done: ${ErrorNotifyService.getHttpErrorMessage(err)}`);
+            })
+            .finally(() => {
+                this.appSvc.showWaitPanel = false;
             });
             // go to the list of transactions.
         } else {
             for(let key in form.controls) {
                 if(form.controls[key].invalid) {
-                    errors.push('Error!');
+                    this.error.next(`Form is not filled properly.`);
                 }
             }
         }
-        this.messSvc.messages = errors;
     }
 }
