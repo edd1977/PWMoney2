@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "pw-money-app"
+    }
+  },
+  "defaultProject": "pw-money-app",
+  "cli": {
+    "analytics": false
+  }
 }
