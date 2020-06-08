@@ -29,7 +29,7 @@ export class AuthComponent {
                 this.router.navigateByUrl('');
             })
             .catch(err => {
-                this.errors.next(`Login failed: ${ErrorNotifyService.getHttpErrorMessage(err)}`);
+                this.errors.next(err);
             })
             .finally(() => {
                 this.appSvc.showWaitPanel = false;

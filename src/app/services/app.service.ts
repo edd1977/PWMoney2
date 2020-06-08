@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Users, User, Transactions, Transaction } from "./model";
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Router, NavigationEnd } from "@angular/router";
+import { ErrorNotifyService } from "./errorNotify.service";
 
 
 @Injectable()
@@ -23,31 +24,44 @@ export class AppService {
     }
 
     // Login:
-    logIn(name: string, pass: string): Promise<Object> {
+    async logIn(name: string, pass: string): Promise<Object> {
         const url = "http://193.124.114.46:3001/sessions/create";
         const body = { "email": name, "password": pass };
-        return this.http.post(url, body).toPromise() // authorization:
-            .then(response => {
-                this.session_token = response['id_token'];
-                console.log('Authentication is passed successfully!');
-                //
-                return this.getUserInfo(); //.then(ui => {
-            })
-            .then(ui => { // getting user info
-                this.currentUser = Object.assign(new User(), ui["user_info_token"]);
-                return this.getUsers();
-            })
-            .then(uu => { // getting all users
-                this.users = uu as Users;
-                //this.users_test = uu as Users;
-                return this.getTransactions(); // AppService
-            })
-            .then(tt => {
-                this.transactions = tt["trans_token"] as Transactions;
-                return true;
-            });
-    }
 
+        let result: any = null;
+
+        try {
+            result = await this.http.post(url, body).toPromise();
+            this.session_token = result['id_token'];
+        }
+        catch(err) {
+            return Promise.reject("Login failed: " + ErrorNotifyService.getHttpErrorMessage(err));
+        }
+        
+        try {
+            result = await this.getUserInfo();
+            this.currentUser = Object.assign(new User(), result["user_info_token"]);
+        } catch(err) {
+            return Promise.reject("Getting User Info failed: " + ErrorNotifyService.getHttpErrorMessage(err));
+        }
+
+        try {
+            result = await this.getUsers();
+            this.users = result as Users;
+        } catch(err) {
+            return Promise.reject("Getting users List failed: " + ErrorNotifyService.getHttpErrorMessage(err));
+        }
+
+        try {
+            result = await this.getTransactions();
+            this.transactions = result["trans_token"] as Transactions;
+        } catch(err) {
+            return Promise.reject("Getting Transactions failed: " + ErrorNotifyService.getHttpErrorMessage(err));
+        }
+
+        return true;
+    }
+    
     getUserInfo(): Promise<Object> {
         const url = "http://193.124.114.46:3001/api/protected/user-info";
         const headers = (new HttpHeaders()).set('Authorization', 'bearer ' + this.session_token);
@@ -77,7 +91,7 @@ export class AppService {
             // normal:
             url = `http://193.124.114.46:3001/api/protected/users/list`;
             const headers = new HttpHeaders().set('Authorization', 'bearer ' + this.session_token);
-            const body = { filter: filter || "" };
+            const body = { filter: filter || "" }; // I DON'T KNOW WHAT IS filter :(
             return this.http.post(url, body, {headers: headers}).toPromise();
         }
     }
