@@ -2,7 +2,7 @@ import { Component, ViewChild, Injectable, Inject } from "@angular/core";
 import { AppService } from "app/services/app.service";
 import { NgForm, ValidatorFn, FormControl, FormGroup, Validators } from "@angular/forms";
 import { HttpClient } from "@angular/common/http";
-import { Transaction, Users, User } from "app/services/model";
+import { Transaction, Users, User } from "app/model/model";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subject } from "rxjs";
 import { ErrorNotifyService } from "app/services/errorNotify.service";

@@ -9,12 +9,13 @@ import { AppService } from './services/app.service';
 import { AuthComponent } from './auth-component/auth.component';
 import { HttpClientModule } from '@angular/common/http'
 import { MainComponent } from './main-component/main.component';
-import { AuthGuard } from './services/auth.guard';
+import { AuthGuard } from './routing/auth.guard';
 import { NewTransComponent, MyValidators } from './trans-component/new-trans.component/new-trans.component';
 import { TransListComponent } from "./trans-component/trans-list.component";
 import { ColorDirective } from './directives/color.directive';
 import { PositiveNumPipe } from './directives/positive.pipe';
 import { ErrorNotifyService } from './services/errorNotify.service';
+import { UserService } from './services/user.service';
 
 const routes: Routes = [
   {path: '', redirectTo: "/user-info", pathMatch: "full"},
@@ -45,8 +46,12 @@ const routes: Routes = [
     FlexLayoutModule
   ],
   providers: [
-    AppService, AuthGuard, MyValidators,
-    { provide: "ERROR_MESS", useValue: ErrorNotifyService.notyfying }
+    AppService,
+    AuthGuard,
+    MyValidators,
+    { provide: "ERROR_MESS", useValue: ErrorNotifyService.notyfying },
+    { provide: "BASE_URL", useValue: "http://localhost:3500/" },
+    UserService
   ],
   bootstrap: [AppComponent]
 })
