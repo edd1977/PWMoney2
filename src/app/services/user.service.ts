@@ -5,7 +5,7 @@ import { map } from "rxjs/operators";
 import { User, Users } from "app/model/model";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
-import { LoginAction } from "app/redux/actions";
+import { LoginAction, LogoutAction, LoadUsersAction } from "app/redux/actions";
 
 @Injectable()
 export class UserService {
@@ -19,21 +19,36 @@ export class UserService {
         private store: Store
     ) {}
 
-    login(email: string): Observable<Users> {
+    getUserByEmail(email: string): Observable<Users> {
         return this.http.get(this.baseUrl + "users/?email=" + email) as Observable<Users>
+    }
+
+    getUsers(): Observable<Users> {
+        return this.http.get(this.baseUrl + "users") as Observable<Users>;
     }
 
     // Реализация ACTIONS:
 
-    loginSuccess(user: User) {
-        this.session_token = "SUCCESS";
-        // action
-        //this.store.dispatch(new LoginAction(user));
-        setTimeout(() => {
-            this.store.dispatch(new LoginAction(user));
-        }, 2000);
-        // переход на другой маршрут
+    login(user: User) {
+        this.session_token = "SUCCESS"; // обыгрывание реального маркера от сервера.
+        //
+        this.store.dispatch(new LoginAction(user));
         this.router.navigateByUrl('');
+    }
+
+    logoutUser() {
+        let logout = confirm("Do you want to LogOut?");
+        if(logout) {
+            this.store.dispatch(new LogoutAction());
+            this.session_token = ""; // сделать в будущем как effect.
+            this.router.navigateByUrl('auth');
+        }
+    }
+
+    loadUsers() {
+        this.getUsers().subscribe((users) => {
+            this.store.dispatch(new LoadUsersAction(users));
+        });
     }
 
 

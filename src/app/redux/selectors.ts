@@ -1,10 +1,6 @@
-import { createSelector } from '@ngrx/store';
-import { AppState } from './reducers';
+import { User, Users, Transactions } from 'app/model/model';
+import { IApp } from './classes';
 
-interface IApp {
-    app: AppState;
-}
 
-const selectApp = (state: IApp) => state.app;
+export const selectCurrentUser = (state: IApp) => state.currentUser;
 
-export const selectCurrentUser = createSelector(selectApp, (state: AppState) => state.currentUser);

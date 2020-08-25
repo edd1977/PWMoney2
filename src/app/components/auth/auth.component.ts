@@ -30,13 +30,13 @@ export class AuthComponent {
 
         const controls = form.controls;
 
-        this.userSvc.login(controls.email.value)
+        this.userSvc.getUserByEmail(controls.email.value)
             .subscribe((users: Users) => {
                 if(users.length > 0) {
                     if(users[0].password === controls.password.value) {
                         this.messages.next(new Message("Вы вошли в систему", MessageType.Notice));
                         setTimeout(() => {
-                            this.userSvc.loginSuccess(users[0]);
+                            this.userSvc.login(users[0]);
                         }, 1000);
                     } else {
                         this.messages.next(new Message("Ошибка при входе в систему", MessageType.Error));

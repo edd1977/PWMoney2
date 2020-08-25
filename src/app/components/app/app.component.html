@@ -6,7 +6,7 @@
       PW Application
     </div>
 
-    <div *ngIf="appSvc?.authenticated" class="btn-panel" fxLayout="row" [style.padding-top.px]="2" >
+    <div *ngIf="userSvc?.session_token != ''" class="btn-panel" fxLayout="row" [style.padding-top.px]="2" >
       <button class="btn disabled" routerLink="/new-trans" routerLinkActive="active-route" >New trans.</button>
       <button class="btn disabled" routerLink="/trans-list" routerLinkActive="active-route" >Trans. List</button>
       <button class="btn disabled" routerLink="/user-info" routerLinkActive="active-route" >User Info</button>

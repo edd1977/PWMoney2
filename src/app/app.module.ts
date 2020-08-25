@@ -20,7 +20,10 @@ import { AppMessageComponent } from './components/message/message.component'
 
 // redux:
 import { StoreModule } from '@ngrx/store';
-import { userReducer } from './redux/reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { currentUserReducer, usersReducer } from './redux/reducers';
+import { User, Users } from './model/model';
+import { UserEffects } from './redux/effects';
 
 const routes: Routes = [
   {path: '', redirectTo: "/user-info", pathMatch: "full"},
@@ -50,9 +53,14 @@ const routes: Routes = [
     HttpClientModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    StoreModule.forRoot({
-      app: userReducer
-    })
+    StoreModule.forRoot({ // IApp
+      currentUser: currentUserReducer, // авторизированный пользователь
+      users: usersReducer, // список всех пользователей
+      transactions: null // транзакции авторизированного пользователя (пока все в куче)
+    }),
+    EffectsModule.forRoot([
+      UserEffects
+    ])
   ],
   providers: [
     AppService,

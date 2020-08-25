@@ -1,34 +1,55 @@
-import { User, Users, Transactions } from '../model/model';
-import { UserActions, USERACTIONS } from './actions';
+import { User, Users, Transactions, Transaction } from '../model/model';
+import { UserActions, USERACTIONS, LoginAction, LoadUsersAction, UsersActions, USERSACTIONS } from './actions';
+import { IApp } from './classes';
 
-const initialState = {
-    currentUser: null,
-    users: [],
-    transactions: []
+const initialCurrentUserState = null;
+const initialUsersState: Users = [];
+const initialTransactionsState: Transactions = [];
+
+export function transactionsReducer(state: Transactions = initialTransactionsState, action: UserActions) {
+    let newState: Transactions = state;
+
+    switch(action.type) {
+
+        case USERACTIONS.LOGIN:
+            
+            break;
+
+    }
+
+    return newState;
 }
 
-export class AppState {
-    currentUser: User;
-    users: Users;
-    transactions: Transactions
+export function usersReducer(state: Users = initialUsersState, action: UsersActions) {
+    let newState: Users = state; // default
+
+    switch(action.type) {
+
+        case USERSACTIONS.LOAD:
+            newState = action.payload;
+            break;
+
+    }
+
+    return newState;
 }
 
-export function userReducer(state: AppState = initialState, action: UserActions): AppState {
+export function currentUserReducer(state: User = initialCurrentUserState, action: UserActions): User {
 
     let newState: any = state; // default
 
     switch(action.type) {
 
         case USERACTIONS.LOGIN:
-            newState = {
-                ...state,
-                currentUser: action.payload // просто замена текущего пользователя
-            }
+            newState =  (action as LoginAction).payload // просто замена текущего пользователя
+            break;
+
+        case USERACTIONS.LOGOUT:
+            newState = null;
+            // TODO effect для обнуления 
             break;
 
     }
 
-    console.log("userReducer() =>");
-    console.log(newState);
     return newState;
-}
+} // userReducer()
