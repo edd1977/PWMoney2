@@ -1,28 +1,40 @@
 import { Injectable, Inject } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Observable, from } from "rxjs";
+import { map } from "rxjs/operators";
 import { User, Users } from "app/model/model";
+import { Router } from "@angular/router";
+import { Store } from "@ngrx/store";
+import { LoginAction } from "app/redux/actions";
 
 @Injectable()
 export class UserService {
 
+    session_token = ""; // имитация получения маркера из запроса авторизации.
+
     constructor(
+        private router: Router,
         private http: HttpClient,
-        @Inject("BASE_URL") private baseUrl: string
+        @Inject("BASE_URL") private baseUrl: string,
+        private store: Store
     ) {}
 
-    getUserByEmail(email: string): Observable<Users> {
+    login(email: string): Observable<Users> {
         return this.http.get(this.baseUrl + "users/?email=" + email) as Observable<Users>
     }
 
     // Реализация ACTIONS:
 
-    login(email: string) {
-        // Login
-        // 1. Отправляем get к /users?email=useremail
-        this.getUserByEmail(email).subscribe((user: Users) => {
-            console.log(user);
-        });
+    loginSuccess(user: User) {
+        this.session_token = "SUCCESS";
+        // action
+        //this.store.dispatch(new LoginAction(user));
+        setTimeout(() => {
+            this.store.dispatch(new LoginAction(user));
+        }, 2000);
+        // переход на другой маршрут
+        this.router.navigateByUrl('');
     }
+
 
 }

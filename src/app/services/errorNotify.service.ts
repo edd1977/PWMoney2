@@ -1,20 +1,40 @@
 import { Subject } from "rxjs";
 
+export type MessageSubject = Subject<Message>;
 
 export class ErrorNotifyService {
 
-    static notyfying: Subject<string> = new Subject<string>();
+    static notyfying: MessageSubject = new Subject<Message>();
 
-    static getHttpErrorMessage(err: any): string {
-        let mess = "";
+    /**
+     * Вспомогательная функция, которая в удобном виде предоставляет сообщения среды от HttpClient.
+     * @param error 
+     */
+    static getHttpErrorMessage(error: any): string {
+        let text = "";
         //
-        if(typeof(err.error) == "object") {
-            mess = `(${err.status}) ${err.statusText}`;
+        if(typeof(error.error) == "object") {
+            text = `(${error.status}) ${error.statusText}`;
         } else {
-            mess = `(${err.status}) ${err.error}`;
+            text = `(${error.status}) ${error.error}`;
         }
         //
-        return mess;
+        return text;
     }
+
+}
+
+export enum MessageType {
+    "Error",
+    "Warning",
+    "Notice"
+}
+
+export class Message {
+
+    constructor(
+        public message: string,
+        public type: MessageType
+    ) { }
 
 }

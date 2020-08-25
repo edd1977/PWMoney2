@@ -1,5 +1,5 @@
-import { User, Users } from '../model/model';
-import { UserActions, LoginAction, USERACTIONS } from './actions';
+import { User, Users, Transactions } from '../model/model';
+import { UserActions, USERACTIONS } from './actions';
 
 const initialState = {
     currentUser: null,
@@ -7,18 +7,28 @@ const initialState = {
     transactions: []
 }
 
-export function userReducer(state = initialState, action: UserActions) {
+export class AppState {
+    currentUser: User;
+    users: Users;
+    transactions: Transactions
+}
+
+export function userReducer(state: AppState = initialState, action: UserActions): AppState {
+
+    let newState: any = state; // default
+
     switch(action.type) {
 
         case USERACTIONS.LOGIN:
-            return {
+            newState = {
                 ...state,
                 currentUser: action.payload // просто замена текущего пользователя
             }
+            break;
 
-
-        // если никакие действия не подошли:
-        default:
-            return state;
     }
+
+    console.log("userReducer() =>");
+    console.log(newState);
+    return newState;
 }

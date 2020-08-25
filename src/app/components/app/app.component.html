@@ -23,11 +23,12 @@
 
     </div>
 
-    <div fxFlex="0 0 90px" *ngIf="errMess?.length > 0" class="footer" >
+    <app-message></app-message>
+    <!-- <div fxFlex="0 0 90px" *ngIf="errMess?.length > 0" class="footer" >
       <div *ngFor="let mess of errMess; let i = index;" >
         {{i + 1}}) {{mess}}
       </div>
-    </div>
+    </div> -->
 
   </div>
 

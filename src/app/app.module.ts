@@ -3,19 +3,24 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from "@angular/flex-layout";
 
-import { AppComponent } from './app.component';
+import { AppComponent } from './components/app/app.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AppService } from './services/app.service';
-import { AuthComponent } from './auth-component/auth.component';
+import { AuthComponent } from './components/auth/auth.component';
 import { HttpClientModule } from '@angular/common/http'
-import { MainComponent } from './main-component/main.component';
+import { MainComponent } from './components/main/main.component';
 import { AuthGuard } from './routing/auth.guard';
-import { NewTransComponent, MyValidators } from './trans-component/new-trans.component/new-trans.component';
-import { TransListComponent } from "./trans-component/trans-list.component";
+import { NewTransComponent, MyValidators } from './components/transaction/new-trans/new-trans.component';
+import { TransListComponent } from "./components/transaction/trans-list.component";
 import { ColorDirective } from './directives/color.directive';
 import { PositiveNumPipe } from './directives/positive.pipe';
 import { ErrorNotifyService } from './services/errorNotify.service';
 import { UserService } from './services/user.service';
+import { AppMessageComponent } from './components/message/message.component'
+
+// redux:
+import { StoreModule } from '@ngrx/store';
+import { userReducer } from './redux/reducers';
 
 const routes: Routes = [
   {path: '', redirectTo: "/user-info", pathMatch: "full"},
@@ -32,6 +37,7 @@ const routes: Routes = [
     MainComponent,
     NewTransComponent,
     TransListComponent,
+    AppMessageComponent,
     // Directives:
     ColorDirective,
     // Pipes:
@@ -43,7 +49,10 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     HttpClientModule,
     ReactiveFormsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    StoreModule.forRoot({
+      app: userReducer
+    })
   ],
   providers: [
     AppService,

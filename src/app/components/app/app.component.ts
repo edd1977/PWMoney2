@@ -1,7 +1,6 @@
 import { Component, Inject } from '@angular/core';
-import { AppService } from './services/app.service';
-import { ErrorNotifyService } from './services/errorNotify.service';
-import { Subscriber, Subject } from 'rxjs';
+import { AppService } from '../../services/app.service';
+import { Subject } from 'rxjs';
 import { Router, NavigationEnd } from '@angular/router';
 
 @Component({

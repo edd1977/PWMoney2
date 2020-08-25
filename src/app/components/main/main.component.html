@@ -8,15 +8,15 @@
 
             <div class="" fxFlexAlign="center" >
                 <label>Name:</label>
-                <label>{{appSvc?.currentUser?.name}}</label>
+                <label>{{(currentUser$ | async)?.name}}</label>
             </div>
             <div class="" fxFlexAlign="center" >
                 <label>E-mail:</label>
-                <label>{{appSvc?.currentUser?.email}}</label>
+                <label>{{(currentUser$ | async)?.email}}</label>
             </div>
             <div class="" fxFlexAlign="center" >
                 <label>Balance:</label>
-                <label>{{appSvc?.currentUser?.balance}}</label>
+                <label>{{(currentUser$ | async)?.balance}}</label>
             </div>
             
             <button (click)="logOut()" class="btn" fxFlexAlign="center" >Log out</button>

@@ -1,0 +1,9 @@
+<div fxFlex="100" fxLayout="column" >
+    <div *ngIf="message != ''" [ngClass]="{
+        error: messageType === MessageTypeClass.Error,
+        warning: messageType === MessageTypeClass.Warning,
+        notice: messageType === MessageTypeClass.Notice
+    }" class="message-box" >
+        {{message}}
+    </div>
+</div>

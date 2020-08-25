@@ -1,10 +1,10 @@
 import { Component, Inject } from "@angular/core";
 import { AppService } from "app/services/app.service";
+import { MessageSubject, Message, MessageType } from '../../services/errorNotify.service';
 import { NgForm } from "@angular/forms";
-import { User } from "app/model/model";
+import { User, Users } from "app/model/model";
 import { Router } from "@angular/router";
-import { Subject } from "rxjs";
-import { ErrorNotifyService } from "app/services/errorNotify.service";
+import { Subject, Observable } from "rxjs";
 import { UserService } from "app/services/user.service";
 
 
@@ -17,10 +17,10 @@ export class AuthComponent {
 
     login_op: boolean = true;
 
-    constructor(private userSvc: UserService, private router: Router,
-        @Inject("ERROR_MESS") private errors: Subject<string> ) {
-        //
-    }
+    constructor(
+        private userSvc: UserService,
+        @Inject("ERROR_MESS") private messages: MessageSubject
+    ) { }
 
     logIn(form: NgForm) {
 
@@ -28,7 +28,21 @@ export class AuthComponent {
             return;
         }
 
-        this.userSvc.login(form.controls.email.value);
+        const controls = form.controls;
+
+        this.userSvc.login(controls.email.value)
+            .subscribe((users: Users) => {
+                if(users.length > 0) {
+                    if(users[0].password === controls.password.value) {
+                        this.messages.next(new Message("Вы вошли в систему", MessageType.Notice));
+                        setTimeout(() => {
+                            this.userSvc.loginSuccess(users[0]);
+                        }, 1000);
+                    } else {
+                        this.messages.next(new Message("Ошибка при входе в систему", MessageType.Error));
+                    }
+                }
+            });
 
         // this.appSvc.showWaitPanel = true;
         // //
