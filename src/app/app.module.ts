@@ -21,9 +21,10 @@ import { AppMessageComponent } from './components/message/message.component'
 // redux:
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { currentUserReducer, usersReducer } from './redux/reducers';
+import { currentUserReducer, usersReducer, transactionsReducer } from './redux/reducers';
 import { User, Users } from './model/model';
 import { UserEffects } from './redux/effects';
+import { TransactionService } from './services/transaction.service';
 
 const routes: Routes = [
   {path: '', redirectTo: "/user-info", pathMatch: "full"},
@@ -56,7 +57,7 @@ const routes: Routes = [
     StoreModule.forRoot({ // IApp
       currentUser: currentUserReducer, // авторизированный пользователь
       users: usersReducer, // список всех пользователей
-      transactions: null // транзакции авторизированного пользователя (пока все в куче)
+      transactions: transactionsReducer // транзакции авторизированного пользователя
     }),
     EffectsModule.forRoot([
       UserEffects
@@ -68,7 +69,8 @@ const routes: Routes = [
     MyValidators,
     { provide: "ERROR_MESS", useValue: ErrorNotifyService.notyfying },
     { provide: "BASE_URL", useValue: "http://localhost:3500/" },
-    UserService
+    UserService,
+    TransactionService
   ],
   bootstrap: [AppComponent]
 })

@@ -10,13 +10,13 @@
                     <th>Date</th><th>Recipient</th><th>Amount</th><th>Balance</th>
                 </tr>
             </thead>
-            <tbody *ngIf="appSvc?.transactions.length == 0">
+            <tbody *ngIf="(transactions$ | async)?.length == 0">
                 <tr>
                     <td colspan="4" style="padding: 10px;" >Transaction List is Empty</td>
                 </tr>
             </tbody>
-            <tbody *ngIf="appSvc?.transactions.length > 0" >
-                <tr *ngFor="let t of appSvc.transactions; let i=index;" >
+            <tbody *ngIf="(transactions$ | async)?.length > 0" >
+                <tr *ngFor="let t of (transactions$ | async); let i=index;" >
                     <td>{{t.date | date:"dd.MM.yyyy" }}</td>
                     <td>{{t.username}}</td>
                     <td [colorNum]="t.amount" class="number" >{{t.amount | positiveNum | number:'1.2-2' }}</td>
@@ -27,5 +27,7 @@
         </table>
 
     </div>
+
+    <button (click)="clickText()" >TEST</button>
     
 </div>

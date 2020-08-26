@@ -1,18 +1,23 @@
 import { User, Users, Transactions, Transaction } from '../model/model';
-import { UserActions, USERACTIONS, LoginAction, LoadUsersAction, UsersActions, USERSACTIONS } from './actions';
+import { UserActions, USER_ACTIONS, LoginAction, LoadUsersAction, UsersActions, USERS_ACTIONS, TRANSACTION_ACTIONS, TransactionActions } from './actions';
 import { IApp } from './classes';
+import { act } from '@ngrx/effects';
 
 const initialCurrentUserState = null;
 const initialUsersState: Users = [];
 const initialTransactionsState: Transactions = [];
 
-export function transactionsReducer(state: Transactions = initialTransactionsState, action: UserActions) {
+export function transactionsReducer(state: Transactions = initialTransactionsState, action: TransactionActions) {
     let newState: Transactions = state;
 
     switch(action.type) {
 
-        case USERACTIONS.LOGIN:
-            
+        case TRANSACTION_ACTIONS.LOAD:
+            newState = action.payload;
+            break;
+
+        case TRANSACTION_ACTIONS.CLEAR:
+            newState = [];
             break;
 
     }
@@ -25,7 +30,7 @@ export function usersReducer(state: Users = initialUsersState, action: UsersActi
 
     switch(action.type) {
 
-        case USERSACTIONS.LOAD:
+        case USERS_ACTIONS.LOAD:
             newState = action.payload;
             break;
 
@@ -40,11 +45,11 @@ export function currentUserReducer(state: User = initialCurrentUserState, action
 
     switch(action.type) {
 
-        case USERACTIONS.LOGIN:
+        case USER_ACTIONS.LOGIN:
             newState =  (action as LoginAction).payload // просто замена текущего пользователя
             break;
 
-        case USERACTIONS.LOGOUT:
+        case USER_ACTIONS.LOGOUT:
             newState = null;
             // TODO effect для обнуления 
             break;

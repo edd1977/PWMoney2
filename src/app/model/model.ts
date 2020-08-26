@@ -16,6 +16,7 @@ export class Transaction {
 
     constructor(
         public username: string,
+        public recipient: string,
         public date: Date,
         public amount: number,
         public balance: number,
