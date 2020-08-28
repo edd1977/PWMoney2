@@ -11,26 +11,34 @@ export namespace USER_ACTIONS {
 
 export class LoginAction implements Action {
     type: string = USER_ACTIONS.LOGIN;
-
-    constructor(public payload: User) { } // будем передавать связку email и password, введенные в форме.
+    constructor(public payload: User) { }
 }
 
 export class LogoutAction implements Action {
     type: string = USER_ACTIONS.LOGOUT;
 }
 
-export type UserActions = LoginAction | LogoutAction;
+export class RegisterAction implements Action {
+    type: string = USER_ACTIONS.REGISTER;
+    constructor(public payload: User) { }
+}
+
+export type UserActions = LoginAction | LogoutAction | RegisterAction;
 
 // *************************************************************
 
 export namespace USERS_ACTIONS {
-    export const LOAD: string = "LOAD_USERS"
+    export const LOAD: string = "LOAD_USERS";
+    export const CLEAR: string = "CLEAR_USERS";
 }
 
 export class LoadUsersAction implements Action {
     type: string = USERS_ACTIONS.LOAD;
-
     constructor(public payload: Users) { }
+}
+
+export class ClearUsersAction implements Action {
+    type: string = USERS_ACTIONS.CLEAR;
 }
 
 export type UsersActions = LoadUsersAction;
@@ -44,7 +52,6 @@ export namespace TRANSACTION_ACTIONS {
 
 export class LoadTransactionsAction implements Action {
     type: string = TRANSACTION_ACTIONS.LOAD;
-
     constructor(public payload: Transactions) { }
 }
 

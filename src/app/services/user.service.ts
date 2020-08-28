@@ -51,5 +51,11 @@ export class UserService {
         });
     }
 
+    registerUser(user: User) {
+        this.http.post(this.baseUrl + "users", user)
+        .subscribe((user: User) => {
+            this.login(user);
+        })
+    }
 
 }

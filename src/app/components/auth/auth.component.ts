@@ -3,7 +3,7 @@ import { AppService } from "app/services/app.service";
 import { MessageSubject, Message, MessageType } from '../../services/errorNotify.service';
 import { NgForm } from "@angular/forms";
 import { User, Users } from "app/model/model";
-import { Router } from "@angular/router";
+import { Router, ROUTER_CONFIGURATION } from "@angular/router";
 import { Subject, Observable } from "rxjs";
 import { UserService } from "app/services/user.service";
 
@@ -24,16 +24,14 @@ export class AuthComponent {
 
     logIn(form: NgForm) {
 
-        if(form.invalid) {
-            return;
-        }
+        if(form.invalid) return;
 
         const controls = form.controls;
 
         this.userSvc.getUserByEmail(controls.email.value)
             .subscribe((users: Users) => {
                 if(users.length > 0) {
-                    if(users[0].password === controls.password.value) {
+                    if("" + users[0].password === controls.password.value) {
                         this.messages.next(new Message("Вы вошли в систему", MessageType.Notice));
                         setTimeout(() => {
                             this.userSvc.login(users[0]);
@@ -59,6 +57,15 @@ export class AuthComponent {
     }
 
     addUser(form: NgForm) {
+
+        if(form.invalid) return;
+
+        const controls = form.controls;
+
+        const user = new User(controls.email.value, controls.password.value, controls.name.value, 400)
+
+        this.userSvc.registerUser(user); // там будет переход на функцию для действия LOGIN.
+
         // const user = Object.assign(new User(), {
         //     name: form.controls.name.value,
         //     email: form.controls.email.value

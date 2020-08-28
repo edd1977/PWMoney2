@@ -1,58 +1,64 @@
 {
-    "users": [
-        {
-            "id": 1,
-            "name": "Denis",
-            "balance": 450,
-            "email": "mai_den@mail.ru",
-            "password": "123"
-        },
-        {
-            "id": 2,
-            "name": "Test User 1",
-            "balance": 600,
-            "email": "test@1",
-            "password": "12345"
-        },
-        {
-            "id": 3,
-            "name": "Test User 2",
-            "balance": 400,
-            "email": "test@2",
-            "password": "1"
-        },
-        {
-            "id": 4,
-            "name": "Test User 3",
-            "balance": 300,
-            "email": "test@3"
-        }
-    ],
-
-    "transactions": [
-        {
-            "username": "mai_den@mail.ru",
-            "recipient": "test@1",
-            "date": "2020.06.04",
-            "amount": 100,
-            "balance": 300,
-            "id": 1
-        },
-        {
-            "username": "test@2",
-            "recipient": "mai_den@mail.ru",
-            "date": "2020.06.10",
-            "amount": 150,
-            "balance": 250,
-            "id": 2
-        },
-        {
-            "username": "test@3",
-            "recipient": "test@1",
-            "date": "2020.06.12",
-            "amount": 100,
-            "balance": 300,
-            "id": 3
-        }
-    ]
+  "users": [
+    {
+      "id": 1,
+      "name": "Denis",
+      "balance": 450,
+      "email": "mai_den@mail.ru",
+      "password": "123"
+    },
+    {
+      "id": 2,
+      "name": "Test User 1",
+      "balance": 600,
+      "email": "test@1",
+      "password": "12345"
+    },
+    {
+      "id": 3,
+      "name": "Test User 2",
+      "balance": 400,
+      "email": "test@2",
+      "password": "1"
+    },
+    {
+      "id": 4,
+      "name": "Test User 3",
+      "balance": 300,
+      "email": "test@3"
+    },
+    {
+      "email": "fff@ggg",
+      "password": 123,
+      "name": "FFF",
+      "balance": 400,
+      "id": 5
+    }
+  ],
+  "transactions": [
+    {
+      "username": "mai_den@mail.ru",
+      "recipient": "test@1",
+      "date": "2020.06.04",
+      "amount": 100,
+      "balance": 300,
+      "id": 1
+    },
+    {
+      "username": "test@2",
+      "recipient": "mai_den@mail.ru",
+      "date": "2020.06.10",
+      "amount": 150,
+      "balance": 250,
+      "id": 2
+    },
+    {
+      "username": "test@3",
+      "recipient": "test@1",
+      "date": "2020.06.12",
+      "amount": 100,
+      "balance": 300,
+      "id": 3
+    }
+  ]
 }
