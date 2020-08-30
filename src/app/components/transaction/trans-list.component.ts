@@ -24,8 +24,4 @@ export class TransListComponent {
         this.transactions$ = store.select(selectTransactions);
     }
 
-    clickText() {
-        this.transSvc.loadTransactions();
-    }
-
 }

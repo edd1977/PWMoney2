@@ -10,7 +10,7 @@ import { AuthComponent } from './components/auth/auth.component';
 import { HttpClientModule } from '@angular/common/http'
 import { MainComponent } from './components/main/main.component';
 import { AuthGuard } from './routing/auth.guard';
-import { NewTransComponent, MyValidators } from './components/transaction/new-trans/new-trans.component';
+import { NewTransComponent } from './components/transaction/new-trans/new-trans.component';
 import { TransListComponent } from "./components/transaction/trans-list.component";
 import { ColorDirective } from './directives/color.directive';
 import { PositiveNumPipe } from './directives/positive.pipe';
@@ -66,7 +66,7 @@ const routes: Routes = [
   providers: [
     AppService,
     AuthGuard,
-    MyValidators,
+    //MyValidators,
     { provide: "ERROR_MESS", useValue: ErrorNotifyService.notyfying },
     { provide: "BASE_URL", useValue: "http://localhost:3500/" },
     UserService,

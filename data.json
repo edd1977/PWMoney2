@@ -59,6 +59,22 @@
       "amount": 100,
       "balance": 300,
       "id": 3
+    },
+    {
+      "username": "mai_den@mail.ru",
+      "recipient": "Test User 2",
+      "date": "2020-08-30T20:23:50.386Z",
+      "amount": 50,
+      "balance": 450,
+      "id": 4
+    },
+    {
+      "username": "mai_den@mail.ru",
+      "recipient": "Test User 2",
+      "date": "2020-08-30T20:23:52.898Z",
+      "amount": 50,
+      "balance": 450,
+      "id": 5
     }
   ]
 }

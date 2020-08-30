@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { User, Users, Transactions } from '../model/model';
+import { User, Users, Transactions, Transaction } from '../model/model';
 
 // *************************************************************
 
@@ -30,6 +30,7 @@ export type UserActions = LoginAction | LogoutAction | RegisterAction;
 export namespace USERS_ACTIONS {
     export const LOAD: string = "LOAD_USERS";
     export const CLEAR: string = "CLEAR_USERS";
+    export const UPDATE_USER: string = "UPDATE_USER"
 }
 
 export class LoadUsersAction implements Action {
@@ -41,13 +42,19 @@ export class ClearUsersAction implements Action {
     type: string = USERS_ACTIONS.CLEAR;
 }
 
-export type UsersActions = LoadUsersAction;
+export class UpdateUserAction implements Action {
+    type: string = USERS_ACTIONS.UPDATE_USER;
+    constructor(public payload: User) { }
+}
+
+export type UsersActions = LoadUsersAction | UpdateUserAction | ClearUsersAction;
 
 // *************************************************************
 
 export namespace TRANSACTION_ACTIONS {
-    export const LOAD: string = "LOAD_TRANSACTIONS"
-    export const CLEAR: string = "CLEAR_TRANSACTIONS"
+    export const LOAD: string = "LOAD_TRANSACTIONS";
+    export const CLEAR: string = "CLEAR_TRANSACTIONS";
+    export const ADD: string = "ADD_NEW_TRANSACTION";
 }
 
 export class LoadTransactionsAction implements Action {
@@ -59,4 +66,9 @@ export class ClearTransactionsAction implements Action {
     type: string = TRANSACTION_ACTIONS.CLEAR;
 }
 
-export type TransactionActions = LoadTransactionsAction;
+export class AddNewTransactionAction implements Action {
+    type: string = TRANSACTION_ACTIONS.ADD;
+    constructor(public payload: Transaction) { }
+}
+
+export type TransactionActions = LoadTransactionsAction | ClearTransactionsAction | AddNewTransactionAction;

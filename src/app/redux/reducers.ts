@@ -1,5 +1,5 @@
 import { User, Users, Transactions, Transaction } from '../model/model';
-import { UserActions, USER_ACTIONS, LoginAction, LoadUsersAction, UsersActions, USERS_ACTIONS, TRANSACTION_ACTIONS, TransactionActions, RegisterAction } from './actions';
+import { UserActions, USER_ACTIONS, LoginAction, LoadUsersAction, UsersActions, USERS_ACTIONS, TRANSACTION_ACTIONS, TransactionActions, RegisterAction, LoadTransactionsAction, UpdateUserAction } from './actions';
 import { IApp } from './classes';
 import { act } from '@ngrx/effects';
 
@@ -13,7 +13,7 @@ export function transactionsReducer(state: Transactions = initialTransactionsSta
     switch(action.type) {
 
         case TRANSACTION_ACTIONS.LOAD:
-            newState = action.payload;
+            newState = (action as LoadTransactionsAction).payload; 
             break;
 
         case TRANSACTION_ACTIONS.CLEAR:
@@ -32,12 +32,18 @@ export function usersReducer(state: Users = initialUsersState, action: UsersActi
     switch(action.type) {
 
         case USERS_ACTIONS.LOAD:
-            newState = action.payload;
+            newState = (action as LoadUsersAction).payload;
             break;
 
         case USERS_ACTIONS.CLEAR:
-            console.log("Users were cleaned.");
             newState = [];
+            break;
+
+        case USERS_ACTIONS.UPDATE_USER:
+            const updatedUser: User = (action as UpdateUserAction).payload;
+            newState = [...state];
+            const index = newState.findIndex(u => u.id === updatedUser.id)
+            newState.splice(index, 1, updatedUser);
             break;
 
     }

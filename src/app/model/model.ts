@@ -5,7 +5,8 @@ export class User {
         public email: string,
         public password: string,
         public name?: string,
-        public balance: number = 0
+        public balance: number = 0,
+        public id?: number
     ) {}
 
 }
