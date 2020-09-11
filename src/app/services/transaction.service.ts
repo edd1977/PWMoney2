@@ -66,7 +66,7 @@ export class TransactionService {
         }
     }
 
-    addNewTransaction(transaction: Transaction, callback: () => void) {
+    addNewTransaction(transaction: Transaction) {
         this.postNewTransaction(transaction).subscribe(transaction => {
             this.store.dispatch(new AddNewTransactionAction(transaction));
         })

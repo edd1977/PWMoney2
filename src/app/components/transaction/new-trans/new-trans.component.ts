@@ -131,31 +131,27 @@ export class NewTransComponent {
             //this.appSvc.showWaitPanel = true;
             //
 
-            const getCallback = (form: FormGroup) => {
-                return () => {
-                    this.callbackAfterTransactionAdded(form);
-                }
+            // проверка на имя пользователя:
+            const uName = form.controls.name.value;
+            const recip = this.userSvc.users.find(u => u.name === uName);
+            if(!recip) {
+                this.error.next(`Incorrect recipient name!`);
+                return;
             }
 
+            const summa = Number.parseFloat(form.controls.amount.value);
+            //
             this.transSvc.addNewTransaction(new Transaction(
                 this.userSvc.currentUser.email,
-                form.controls.name.value,
+                recip.email,
                 new Date(Date.now()),
-                Number.parseFloat(form.controls.amount.value),
-                this.userSvc.currentUser.balance
-                ),
-                getCallback(form)
+                summa,
+                this.userSvc.currentUser.balance - summa)
             );
 
-            // this.appSvc.createTransaction(form.controls.name.value, Number.parseFloat(form.controls.amount.value))
-            // .then(response => {
-            //     // We must add a new transaction:
-            //     this.appSvc.addFixedTransactionToList(response["trans_token"] as Transaction);
-            //     this.router.navigateByUrl("/user-info");
-            // })
-            // .catch(err => {
-            //     this.error.next(`Transaction can't be done: ${ErrorNotifyService.getHttpErrorMessage(err)}`);
-            // })
+            // TODO:
+            // необходимо после всех записей обнулить реквизиты формы и убрать панель загрузки. Она пока не используется, но должна.
+
             // .finally(() => {
             //     this.appSvc.showWaitPanel = false;
             // });

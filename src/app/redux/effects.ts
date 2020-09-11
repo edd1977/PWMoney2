@@ -102,23 +102,35 @@ export class UserEffects {
     .pipe(
         ofType(TRANSACTION_ACTIONS.ADD),
         switchMap((action: AddNewTransactionAction) => {
+            const trans = (action.payload as Transaction);
+            // редактирование данных участвующих в транзакции пользователей:
+            const u1 = {
+                ...this.userSvc.users.find(u => u.email === trans.username)
+            };
+            const u2 = {
+                ...this.userSvc.users.find(u => u.email === trans.recipient)
+            };
+            u1.balance -= trans.amount;
+            u2.balance += trans.amount;
+            // запись данных в БД:
             return forkJoin([
-                this.userSvc.updateUser(this.userSvc.users.find(u => u.name === (action.payload as Transaction).username)),
-                this.userSvc.updateUser(this.userSvc.users.find(u => u.name === (action.payload as Transaction).recipient))
+                this.userSvc.updateUser(u1),
+                this.userSvc.updateUser(u2)
             ])
+        }),
+        mergeMap(data => {
+            return this.userSvc.getUsers()
         }),
         mergeMap((users: Users) => {
             return [
                 {
-                    type: TRANSACTION_ACTIONS.LOAD,
-                    payload: users[0]
-                },
-                {
-                    type: TRANSACTION_ACTIONS.LOAD,
-                    payload: users[1]
+                    type: USERS_ACTIONS.LOAD,
+                    payload: users
                 }
             ]
         })
     );
 
 }
+
+// { dispatch: false } - это если не нужно генерировать никаких действий, а нужен только эффект!

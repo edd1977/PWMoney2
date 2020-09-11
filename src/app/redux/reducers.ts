@@ -1,5 +1,5 @@
 import { User, Users, Transactions, Transaction } from '../model/model';
-import { UserActions, USER_ACTIONS, LoginAction, LoadUsersAction, UsersActions, USERS_ACTIONS, TRANSACTION_ACTIONS, TransactionActions, RegisterAction, LoadTransactionsAction, UpdateUserAction } from './actions';
+import { UserActions, USER_ACTIONS, LoginAction, LoadUsersAction, UsersActions, USERS_ACTIONS, TRANSACTION_ACTIONS, TransactionActions, RegisterAction, LoadTransactionsAction, UpdateUserAction, AddNewTransactionAction } from './actions';
 import { IApp } from './classes';
 import { act } from '@ngrx/effects';
 
@@ -19,6 +19,14 @@ export function transactionsReducer(state: Transactions = initialTransactionsSta
         case TRANSACTION_ACTIONS.CLEAR:
             console.log("Transactions were cleaned.");
             newState = [];
+            break;
+
+        // TODO:
+        case TRANSACTION_ACTIONS.ADD:
+            newState = [
+                ...state,
+                (action as AddNewTransactionAction).payload
+            ]
             break;
 
     }
